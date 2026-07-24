@@ -1,0 +1,24 @@
+{
+  "name": "voice-agent-platform",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Provider-agnostic AI voice agent platform (Twilio + LLM + TTS + STT adapters) with multi-tenant config and OpenTelemetry observability.",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @platform/core && npm run build -w @platform/observability && npm run build -w @platform/config && npm run build -w @platform/data && npm run build -w @platform/adapters-mock && npm run build -w @platform/adapters-twilio && npm run build -w @platform/adapters-deepgram && npm run build -w @platform/adapters-openai && npm run build -w @platform/adapters-elevenlabs && npm run build -w @platform/adapters-calcom && npm run build -w @platform/engine && npm run build -w @platform/voice-agent",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "npm run clean --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.9",
+    "@types/node": "^20.14.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "title": "Voice Agent Overview",
+  "uid": "voice-agent-overview",
+  "schemaVersion": 39,
+  "version": 1,
+  "tags": ["voice-agent"],
+  "timezone": "browser",
+  "time": { "from": "now-6h", "to": "now" },
+  "refresh": "30s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Call volume (calls / 5m)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "increase(voice_agent_call_duration_ms_count[5m])",
+          "legendFormat": "calls"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Average call duration (s)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "(rate(voice_agent_call_duration_ms_sum[5m]) / rate(voice_agent_call_duration_ms_count[5m])) / 1000",
+          "legendFormat": "avg duration (s)"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Turn latency p95 by stage (ms)",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 0 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum(rate(voice_agent_turn_latency_ms_bucket[5m])) by (le, stage))",
+          "legendFormat": "{{stage}}"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Fallback triggers / 5m",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "increase(voice_agent_fallback_total[5m])",
+          "legendFormat": "fallbacks"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Escalations to human / 5m",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 8, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "increase(voice_agent_escalations_total[5m])",
+          "legendFormat": "escalations"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Bookings created / 5m",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 8, "x": 16, "y": 8 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "increase(voice_agent_bookings_created_total[5m])",
+          "legendFormat": "bookings"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Provider errors / 5m by provider + operation",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 16 },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "targets": [
+        {
+          "expr": "sum(increase(voice_agent_provider_error_total[5m])) by (provider, operation)",
+          "legendFormat": "{{provider}} / {{operation}}"
+        }
+      ]
+    }
+  ]
+}

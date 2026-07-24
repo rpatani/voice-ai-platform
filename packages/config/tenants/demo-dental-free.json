@@ -1,0 +1,49 @@
+{
+  "tenantId": "demo-dental-free",
+  "displayName": "Bright Smile Dental (free stack)",
+  "inboundPhoneNumbers": ["+15550100200"],
+  "providers": {
+    "telephony": "twilio",
+    "stt": "deepgram",
+    "llm": "groq",
+    "tts": "deepgram",
+    "calendar": "mock"
+  },
+  "providerOptions": {
+    "groq": {
+      "model": "llama-3.3-70b-versatile"
+    },
+    "deepgram": {
+      "model": "nova-3"
+    },
+    "deepgram-tts": {
+      "model": "aura-2-thalia-en"
+    }
+  },
+  "businessHours": [
+    { "day": "mon", "open": "09:00", "close": "17:00" },
+    { "day": "tue", "open": "09:00", "close": "17:00" },
+    { "day": "wed", "open": "09:00", "close": "17:00" },
+    { "day": "thu", "open": "09:00", "close": "17:00" },
+    { "day": "fri", "open": "09:00", "close": "15:00" }
+  ],
+  "services": [
+    {
+      "id": "cleaning",
+      "name": "Routine cleaning",
+      "description": "Standard dental cleaning and checkup",
+      "durationMinutes": 30
+    },
+    {
+      "id": "checkup",
+      "name": "Dental checkup",
+      "description": "General examination",
+      "durationMinutes": 20
+    }
+  ],
+  "systemPromptTemplate": "You are a friendly phone assistant for {{businessName}}. Your job is to greet callers warmly, understand why they're calling, and collect their name, phone number, the service they need, and a preferred appointment time. Available services: {{services}}. Business hours: {{businessHours}}. If you cannot help with a request, offer to take a message or transfer the call.",
+  "escalation": {
+    "transferNumber": "+15559876543",
+    "maxRetriesPerSlot": 3
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "tenantId": "demo-dental",
+  "displayName": "Bright Smile Dental",
+  "inboundPhoneNumbers": ["+15551234567"],
+  "providers": {
+    "telephony": "twilio",
+    "stt": "deepgram",
+    "llm": "openai",
+    "tts": "elevenlabs",
+    "calendar": "calcom"
+  },
+  "providerOptions": {
+    "openai": {
+      "model": "gpt-4o-mini"
+    },
+    "elevenlabs": {
+      "voiceId": "REPLACE_WITH_VOICE_ID",
+      "model": "eleven_flash_v2_5"
+    },
+    "deepgram": {
+      "model": "nova-3"
+    },
+    "calcom": {
+      "eventTypeIdByService": {
+        "cleaning": 123456,
+        "checkup": 123457
+      }
+    }
+  },
+  "businessHours": [
+    { "day": "mon", "open": "09:00", "close": "17:00" },
+    { "day": "tue", "open": "09:00", "close": "17:00" },
+    { "day": "wed", "open": "09:00", "close": "17:00" },
+    { "day": "thu", "open": "09:00", "close": "17:00" },
+    { "day": "fri", "open": "09:00", "close": "15:00" }
+  ],
+  "services": [
+    {
+      "id": "cleaning",
+      "name": "Routine cleaning",
+      "description": "Standard dental cleaning and checkup",
+      "durationMinutes": 30
+    },
+    {
+      "id": "checkup",
+      "name": "Dental checkup",
+      "description": "General examination",
+      "durationMinutes": 20
+    }
+  ],
+  "systemPromptTemplate": "You are a friendly phone assistant for {{businessName}}. Your job is to greet callers warmly, understand why they're calling, and collect their name, phone number, the service they need, and a preferred appointment time. Available services: {{services}}. Business hours: {{businessHours}}. If you cannot help with a request, offer to take a message or transfer the call.",
+  "escalation": {
+    "transferNumber": "+15559876543",
+    "maxRetriesPerSlot": 3
+  }
+}
